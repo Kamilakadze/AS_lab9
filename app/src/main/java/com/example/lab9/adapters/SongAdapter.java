@@ -1,6 +1,7 @@
 package com.example.lab9.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,11 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
         // Клик — Избранное
         holder.itemView.setOnClickListener(v -> {
-            boolean newState = !song.isFavorite();
-            song.setFavorite(newState);
-            saveFavoriteState(holder.itemView.getContext(), song);
-            notifyItemChanged(position);
+            Intent serviceIntent = new Intent(holder.itemView.getContext(), com.example.lab9.services.MusicService.class);
+            serviceIntent.putExtra("songFile", song.getFilePath());
+            holder.itemView.getContext().startService(serviceIntent);
         });
+
 
         // Долгое нажатие — Удаление
         holder.itemView.setOnLongClickListener(v -> {
