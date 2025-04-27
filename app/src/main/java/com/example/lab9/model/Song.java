@@ -11,7 +11,6 @@ public class Song {
         this.filePath = filePath;
     }
 
-    // Геттеры и сеттеры
     public String getTitle() {
         return title;
     }

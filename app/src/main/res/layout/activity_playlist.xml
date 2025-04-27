@@ -4,13 +4,10 @@
     android:orientation="vertical"
     android:background="@android:color/black"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:text="Playlist Screen"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playlist_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
