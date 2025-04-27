@@ -35,6 +35,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         holder.titleTextView.setText(song.getTitle());
         holder.artistTextView.setText(song.getArtist());
 
+        // Загружаем состояние избранного
         song.setFavorite(loadFavoriteState(holder.itemView.getContext(), song));
 
         if (song.isFavorite()) {
@@ -43,6 +44,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             holder.favoriteTextView.setVisibility(View.GONE);
         }
 
+        // Клик — Избранное
         holder.itemView.setOnClickListener(v -> {
             boolean newState = !song.isFavorite();
             song.setFavorite(newState);
@@ -50,11 +52,13 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             notifyItemChanged(position);
         });
 
+        // Долгое нажатие — Удаление
         holder.itemView.setOnLongClickListener(v -> {
             showDeleteDialog(holder.itemView.getContext(), position);
             return true;
         });
     }
+
 
     @Override
     public int getItemCount() {
