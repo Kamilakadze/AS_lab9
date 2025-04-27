@@ -47,10 +47,15 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
         // Клик — Избранное
         holder.itemView.setOnClickListener(v -> {
-            Intent serviceIntent = new Intent(holder.itemView.getContext(), com.example.lab9.services.MusicService.class);
+            Context context = holder.itemView.getContext();
+
+            context.stopService(new Intent(context, com.example.lab9.services.MusicService.class));
+
+            Intent serviceIntent = new Intent(context, com.example.lab9.services.MusicService.class);
             serviceIntent.putExtra("songFile", song.getFilePath());
-            holder.itemView.getContext().startService(serviceIntent);
+            context.startService(serviceIntent);
         });
+
 
 
         // Долгое нажатие — Удаление
