@@ -8,11 +8,13 @@
 
     <Button
         android:id="@+id/btn_stop_music"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Стоп музыку"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="@android:color/white"/>
+        android:text="Stop Music"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_red_dark"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/playlist_recycler_view"

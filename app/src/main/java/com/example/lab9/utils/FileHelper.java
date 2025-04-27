@@ -16,7 +16,7 @@ public class FileHelper {
         List<Song> songList = new ArrayList<>();
 
         try {
-            InputStream is = context.getAssets().open("songs.txt");
+            InputStream is = context.getAssets().open("song.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 
             String line;
