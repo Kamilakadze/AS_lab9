@@ -34,4 +34,15 @@ public class Song {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
+
+    private boolean isFavorite;
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
 }

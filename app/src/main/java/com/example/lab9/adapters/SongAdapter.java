@@ -1,5 +1,6 @@
 package com.example.lab9.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,26 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         Song song = songList.get(position);
         holder.titleTextView.setText(song.getTitle());
         holder.artistTextView.setText(song.getArtist());
+
+        song.setFavorite(loadFavoriteState(holder.itemView.getContext(), song));
+
+        if (song.isFavorite()) {
+            holder.favoriteTextView.setVisibility(View.VISIBLE);
+        } else {
+            holder.favoriteTextView.setVisibility(View.GONE);
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            boolean newState = !song.isFavorite();
+            song.setFavorite(newState);
+            saveFavoriteState(holder.itemView.getContext(), song);
+            notifyItemChanged(position);
+        });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            showDeleteDialog(holder.itemView.getContext(), position);
+            return true;
+        });
     }
 
     @Override
@@ -41,12 +62,38 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     }
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView, artistTextView;
+        TextView titleTextView, artistTextView, favoriteTextView;
 
         public SongViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.song_title);
             artistTextView = itemView.findViewById(R.id.song_artist);
+            favoriteTextView = itemView.findViewById(R.id.favorite_mark);
         }
+    }
+
+    private void saveFavoriteState(Context context, Song song) {
+        context.getSharedPreferences("favorites", Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean(song.getTitle(), song.isFavorite())
+                .apply();
+    }
+
+    private boolean loadFavoriteState(Context context, Song song) {
+        return context.getSharedPreferences("favorites", Context.MODE_PRIVATE)
+                .getBoolean(song.getTitle(), false);
+    }
+
+    private void showDeleteDialog(Context context, int position) {
+        new androidx.appcompat.app.AlertDialog.Builder(context)
+                .setTitle("Удаление песни")
+                .setMessage("Вы точно хотите удалить эту песню?")
+                .setPositiveButton("Да", (dialog, which) -> {
+                    songList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, songList.size());
+                })
+                .setNegativeButton("Отмена", null)
+                .show();
     }
 }
